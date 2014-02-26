@@ -10,7 +10,7 @@ public class QueryExecutor
 	    try 
 	    {
 	      Class.forName("org.sqlite.JDBC");
-	      connection = DriverManager.getConnection("jdbc:sqlite:data/students.db");
+	      connection = DriverManager.getConnection("jdbc:sqlite:data/data.db");
 	    } 
 	    catch ( Exception e ) {
 	      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
