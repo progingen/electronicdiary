@@ -5,6 +5,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
+
+import structures.Student;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -157,6 +160,14 @@ public class MainForm extends JFrame {
 	
 	private void OpenConnection()
 	{
-		QueryExecutor.Connect();		
+		QueryExecutor.Connect();
+		
+		Student student = new Student();
+		student.name = "Сергей Спиридонов";
+		student.age = 19;
+		student.course = 2;
+		student.groupId = 1;
+		
+		QueryExecutor.AddStudent(student);
 	}
 }
