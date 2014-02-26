@@ -21,7 +21,7 @@ public class MainForm extends JFrame {
 		EventQueue.invokeLater(new Runnable() 
 		{
 			public void run() 
-			{
+			{				
 				try 
 				{
 					MainForm frame = new MainForm();
@@ -38,6 +38,9 @@ public class MainForm extends JFrame {
 	 * Create the frame.
 	 */
 	public MainForm() {
+		
+		this.OpenConnection();
+		
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 400, 600);
 		contentPane = new JPanel();
@@ -150,5 +153,10 @@ public class MainForm extends JFrame {
 		});
 		
 		contentPane.add(openStudentListButton);
+	}
+	
+	private void OpenConnection()
+	{
+		QueryExecutor.Connect();		
 	}
 }
