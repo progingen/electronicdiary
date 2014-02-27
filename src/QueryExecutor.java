@@ -24,6 +24,7 @@ public class QueryExecutor
 	
 	public static boolean AddStudent(Student student)
 	{
+		//gfutfuyft
 		String query =	"INSERT INTO students (name, age, course, groupId)" +
 						"VALUES ('" + 
 						student.name + "', " +
