@@ -1,67 +1,73 @@
 import java.io.*;
+import java.util.ArrayList;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JList;
+import javax.swing.event.*;
+
+import structures.Student;
+
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.BorderLayout;
 
 
-public class StudentList extends JFrame {
+public class StudentList extends JFrame implements ListSelectionListener {
 
-	private JPanel contentPane;
-	private JTextField searchField;
-	private JList studentsList;
-
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private JList list;
+	
 	public StudentList() 
 	{
+		setTitle("Список студентов");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 730, 445);
 		
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		ArrayList<Student> students = QueryExecutor.GetStudents();
+		String[] names = new String[students.size()];
 		
-		JLabel label = new JLabel("\u0421\u043F\u0438\u0441\u043E\u043A \u0441\u0442\u0443\u0434\u0435\u043D\u0442\u043E\u0432");
-		label.setBounds(10, 11, 107, 14);
-		contentPane.add(label);
+		for (int i = 0; i < students.size(); i++)
+		{
+			names[i] = 
+				students.get(i).secondName + " " + 
+				students.get(i).firstName + " " + 
+				students.get(i).middleName;
+		}
 		
-		searchField = new JTextField();
-		searchField.setBounds(212, 8, 212, 20);
-		contentPane.add(searchField);
-		searchField.setColumns(10);
 		
-		studentsList = new JList();
-		studentsList.setBounds(10, 36, 414, 215);
-		contentPane.add(studentsList);
+		list = new JList(names);
+		list.setVisibleRowCount(20);
+		list.setSize(this.getWidth(), this.getHeight());
+        list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        list.setSelectedIndex(0);
+        list.addListSelectionListener(this);
 		
+        JScrollPane listScrollPane = new JScrollPane(list);
+        getContentPane().add(listScrollPane, BorderLayout.BEFORE_FIRST_LINE);                
+        
 		this.FillList();
 	}
 	
+	//Listens to the list
+    public void valueChanged(ListSelectionEvent e) 
+    {
+        // JList list = (JList)e.getSource();
+    }
+	
 	private void FillList()
 	{
-		String dataDiriectory = System.getProperty("user.dir") + "\\data\\";
-		String studentsListFileName = "students.json";
+		/*ArrayList<Student> students = QueryExecutor.GetStudents();
 		
-		String content = null;
-		File file = new File(dataDiriectory + studentsListFileName);
-		
-		try 
+		for (int i = 0; i < students.size(); i++)
 		{
-			FileReader fileReader = new FileReader(file);
+			JLabel name = new JLabel();
+			name.setText(students.get(i).name);
+			name.setBounds(0, 0, 40, 200);
 			
-			char[] chars = new char[(int)file.length()];
-			fileReader.read(chars);
-			content = new String(chars);
-			
-			fileReader.close();
-		}
-		catch (IOException ex) {
-			System.out.print(ex.getMessage());
-		}
-
-		System.out.print(content);
+			this.scrollPane.add(name);
+		}*/
 	}
 }

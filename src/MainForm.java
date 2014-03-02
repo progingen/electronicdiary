@@ -162,12 +162,12 @@ public class MainForm extends JFrame {
 	{
 		QueryExecutor.Connect();
 		
-		Student student = new Student();
+		/*Student student = new Student();
 		student.name = "Сергей Спиридонов";
 		student.age = 19;
 		student.course = 2;
 		student.groupId = 1;
 		
-		QueryExecutor.AddStudent(student);
+		QueryExecutor.AddStudent(student);*/
 	}
 }

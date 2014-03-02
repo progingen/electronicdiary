@@ -1,4 +1,6 @@
 import java.sql.*;
+import java.util.ArrayList;
+
 import org.sqlite.*;
 
 import structures.*;
@@ -22,49 +24,37 @@ public class QueryExecutor
 	    }
 	}
 	
-	public static boolean AddStudent(Student student)
+	public static ArrayList<Student> GetStudents()
 	{
-		//gfutfuyft
-		String query =	"INSERT INTO students (name, age, course, groupId)" +
-						"VALUES ('" + 
-						student.name + "', " +
-						student.age + ", " +
-						student.course + ", " +
-						student.groupId + ");";
+		ArrayList<Student> students = new ArrayList<Student>();
+		String query = "SELECT * FROM students";
 		
 		try
 		{
 			Statement statement = connection.createStatement();
-			statement.executeUpdate(query);
-			statement.close();
+			ResultSet result = statement.executeQuery(query);
 			
-			return true;
+			while (result.next())
+			{
+				Student student = new Student();
+
+				student.recordBookId = result.getInt("RecordBookId");
+				student.firstName = result.getString("FirstName");
+				student.secondName = result.getString("SecondName");
+				student.middleName = result.getString("MiddleName");
+				// student.birthDate = result.getDate("BirthDate");
+				
+				students.add(student);
+			}
+			
+			statement.close();
 		}
 		catch (SQLException e) 
 		{
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
-	    	return false;
+			return null;
 		}
-	}
-	
-	private static void CreateTable(String query)
-	{
-		/*String query ="CREATE TABLE students " +
-						"(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
-						"name TEXT NOT NULL, " + 
-						"age INT NOT NULL, " + 
-						"course INT NOT NULL, " + 
-						"groupId INT NOT NULL)"; */
 		
-		try
-		{
-			Statement statement = connection.createStatement();
-			statement.executeUpdate(query);
-			statement.close();
-		}
-		catch (SQLException e) {
-			System.err.println(e.getClass().getName() + ": " + e.getMessage());
-	    	System.exit(0);
-		}
+		return students;
 	}
 }

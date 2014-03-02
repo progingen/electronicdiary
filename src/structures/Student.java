@@ -1,10 +1,12 @@
 package structures;
 
+import java.sql.Date;
+
 public class Student 
 {
-	public int id;
-	public String name;
-	public int age;
-	public int course;
-	public int groupId;
+	public int recordBookId;
+	public String firstName;
+	public String secondName;
+	public String middleName;
+	public Date birthDate;
 }
