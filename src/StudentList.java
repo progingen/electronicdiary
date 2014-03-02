@@ -32,6 +32,7 @@ public class StudentList extends JFrame implements ListSelectionListener {
 		for (int i = 0; i < students.size(); i++)
 		{
 			names[i] = 
+				(i + 1) + " - " +
 				students.get(i).secondName + " " + 
 				students.get(i).firstName + " " + 
 				students.get(i).middleName;
