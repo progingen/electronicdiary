@@ -97,20 +97,6 @@ public class StudentList extends JFrame implements ListSelectionListener {
         nameLabel.setFont(new Font("Segoe UI", Font.PLAIN, 12));
         studentInfo.add(nameLabel);
         
-        /*namePanel = new JPanel();
-        namePanel.setLayout(new BoxLayout(namePanel, BoxLayout.X_AXIS));
-        
-        JLabel nameLabelHint = new JLabel("Имя: ");
-        nameLabel = new JLabel("");
-        
-        namePanel.add(nameLabelHint);
-        namePanel.add(nameLabel);
-        studentInfo.add(namePanel);
-        
-        panel = new JPanel();
-        studentInfo.add(panel);*/
-        
-		this.FillList();
 	}
 	
 	// Listens to the list
@@ -122,18 +108,4 @@ public class StudentList extends JFrame implements ListSelectionListener {
         Student student = this.students.get(selectedIndex);
         this.nameLabel.setText(student.secondName + " " + student.firstName + " " + student.middleName);
     }
-	
-	private void FillList()
-	{
-		/*ArrayList<Student> students = QueryExecutor.GetStudents();
-		
-		for (int i = 0; i < students.size(); i++)
-		{
-			JLabel name = new JLabel();
-			name.setText(students.get(i).name);
-			name.setBounds(0, 0, 40, 200);
-			
-			this.scrollPane.add(name);
-		}*/
-	}
 }
