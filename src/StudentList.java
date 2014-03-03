@@ -18,11 +18,18 @@ public class StudentList extends JFrame implements ListSelectionListener {
 	 */
 	private static final long serialVersionUID = 1L;
 		
+	private ArrayList<Student> students;
+	
 	// GUI components
 	private JPanel rootPanel;
 	private JPanel headerPanel;
 	private CustomTextField searchTextField;
-	private JList list;
+	private JScrollPane studentsList;
+	
+	private JPanel studentInfo;
+	private SpringLayout studentInfoLayout;
+	
+	private JLabel nameLabel;
 	
 	public StudentList() 
 	{
@@ -46,7 +53,7 @@ public class StudentList extends JFrame implements ListSelectionListener {
 		headerPanel.add(searchTextField);
 		rootPanel.add(headerPanel, BorderLayout.NORTH);
 		
-		ArrayList<Student> students = QueryExecutor.GetStudents();
+		students = QueryExecutor.GetStudents();
 		String[] names = new String[students.size()];
 		
 		for (int i = 0; i < students.size(); i++)
@@ -59,27 +66,61 @@ public class StudentList extends JFrame implements ListSelectionListener {
 		}
 		
 		
-		list = new JList(names);
+		JList list = new JList(names);
+		list.setBorder(new EmptyBorder(5, 5, 5, 5));
+		list.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		list.setVisibleRowCount(20);
 		list.setSize(this.getWidth(), this.getHeight());
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         list.setSelectedIndex(0);
         list.addListSelectionListener(this);
 		
-        JScrollPane studentsList = new JScrollPane(list);
-        rootPanel.add(studentsList, BorderLayout.WEST);     
+        studentsList = new JScrollPane(list);
+        studentsList.setBorder(new EmptyBorder(0, 0, 0, 0));
+        rootPanel.add(studentsList, BorderLayout.WEST);
         
-        JPanel studentInfo = new JPanel();
+        studentInfo = new JPanel();
+        studentInfoLayout = new SpringLayout();
+        
+        studentInfo.setLayout(studentInfoLayout);
         rootPanel.add(studentInfo, BorderLayout.CENTER);
         
-        // test comment
+        JLabel nameLabelHint = new JLabel("Имя:");
+        nameLabelHint.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        studentInfoLayout.putConstraint(SpringLayout.NORTH, nameLabelHint, 10, SpringLayout.NORTH, studentInfo);
+        studentInfoLayout.putConstraint(SpringLayout.WEST, nameLabelHint, 10, SpringLayout.WEST, studentInfo);
+        studentInfo.add(nameLabelHint);
+        
+        nameLabel = new JLabel("");
+        studentInfoLayout.putConstraint(SpringLayout.NORTH, nameLabel, 0, SpringLayout.NORTH, nameLabelHint);
+        studentInfoLayout.putConstraint(SpringLayout.WEST, nameLabel, 6, SpringLayout.EAST, nameLabelHint);
+        nameLabel.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        studentInfo.add(nameLabel);
+        
+        /*namePanel = new JPanel();
+        namePanel.setLayout(new BoxLayout(namePanel, BoxLayout.X_AXIS));
+        
+        JLabel nameLabelHint = new JLabel("Имя: ");
+        nameLabel = new JLabel("");
+        
+        namePanel.add(nameLabelHint);
+        namePanel.add(nameLabel);
+        studentInfo.add(namePanel);
+        
+        panel = new JPanel();
+        studentInfo.add(panel);*/
+        
 		this.FillList();
 	}
 	
-	//Listens to the list
+	// Listens to the list
     public void valueChanged(ListSelectionEvent e) 
     {
-        // JList list = (JList)e.getSource();
+        JList list = (JList)e.getSource();
+        int selectedIndex =  list.getSelectedIndex();
+        
+        Student student = this.students.get(selectedIndex);
+        this.nameLabel.setText(student.secondName + " " + student.firstName + " " + student.middleName);
     }
 	
 	private void FillList()
