@@ -2,14 +2,13 @@ import java.io.*;
 import java.util.ArrayList;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
+import javax.swing.border.*;
 import javax.swing.event.*;
 
-import structures.Student;
+import java.awt.*;
 
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.BorderLayout;
+import structures.*;
+import components.*;
 
 
 public class StudentList extends JFrame implements ListSelectionListener {
@@ -18,6 +17,11 @@ public class StudentList extends JFrame implements ListSelectionListener {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+		
+	// GUI components
+	private JPanel rootPanel;
+	private JPanel headerPanel;
+	private CustomTextField searchTextField;
 	private JList list;
 	
 	public StudentList() 
@@ -25,6 +29,22 @@ public class StudentList extends JFrame implements ListSelectionListener {
 		setTitle("Список студентов");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 730, 445);
+		
+		rootPanel = new JPanel();
+		rootPanel.setLayout(new BorderLayout(10, 10));
+		rootPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+		getContentPane().add(rootPanel, BorderLayout.CENTER);
+		
+		headerPanel = new JPanel();
+		headerPanel.setLayout(new BoxLayout(headerPanel, BoxLayout.X_AXIS));
+		
+		searchTextField = new CustomTextField(30);
+		searchTextField.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		searchTextField.setBorder(new EmptyBorder(5, 5, 5, 5));
+		searchTextField.setPlaceholder("Поиск...");
+		
+		headerPanel.add(searchTextField);
+		rootPanel.add(headerPanel, BorderLayout.NORTH);
 		
 		ArrayList<Student> students = QueryExecutor.GetStudents();
 		String[] names = new String[students.size()];
@@ -46,8 +66,11 @@ public class StudentList extends JFrame implements ListSelectionListener {
         list.setSelectedIndex(0);
         list.addListSelectionListener(this);
 		
-        JScrollPane listScrollPane = new JScrollPane(list);
-        getContentPane().add(listScrollPane, BorderLayout.BEFORE_FIRST_LINE);                
+        JScrollPane studentsList = new JScrollPane(list);
+        rootPanel.add(studentsList, BorderLayout.WEST);     
+        
+        JPanel studentInfo = new JPanel();
+        rootPanel.add(studentInfo, BorderLayout.CENTER);
         
         // test comment
 		this.FillList();
