@@ -1,6 +1,8 @@
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import java.awt.BorderLayout;
+import javax.swing.JLabel;
 
 
 public class Form11 {
@@ -37,6 +39,10 @@ public class Form11 {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(new BorderLayout(0, 0));
+		
+		JLabel lblNewLabel = new JLabel("New label");
+		frame.getContentPane().add(lblNewLabel, BorderLayout.WEST);
 	}
 
 }
