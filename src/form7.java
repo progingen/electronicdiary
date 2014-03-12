@@ -162,5 +162,4 @@ public class form7 extends JFrame {
 		button_1.setBounds(330, 62, 100, 20);
 		contentPane.add(button_1);
 	}
-
 }
